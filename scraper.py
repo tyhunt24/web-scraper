@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas 
-import os
 
 #gets the page that we are going to scrape
 page = requests.get("https://www.basketball-reference.com/leagues/NBA_2022_per_game.html")
@@ -9,12 +8,19 @@ page = requests.get("https://www.basketball-reference.com/leagues/NBA_2022_per_g
 #creates a beatiful soup object that takes content to scrape and the correct parser
 soup = BeautifulSoup(page.content, "html.parser")
 
-#print(soup.prettify())
+#table classes to have
+# for table in soup.find_all('table'):
+#     print(table.get('class'))
 
-#find my element by table and classname
+#get the table that we want
+tables = soup.find_all('table')
 table = soup.find('table', class_="stats_table")
-rows = table.find_all('tr')
+a = []
 
+for row in table.tbody.find_all('tr'):
+    columns = row.find_all('td')
+    for i in columns:
+        print(i.text)
 
 
 
